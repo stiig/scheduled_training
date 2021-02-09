@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class ScheduledTraining < ApplicationRecord
-  validates :instructor_name, presence: true, length: { maximum: 256 }
-  validates :course_name, presence: true, length: { maximum: 256 }, uniqueness: true
+  validates :instructor_name, presence: true, length: { maximum: 256 }, uniqueness: { scope: :course_name }
+  validates :course_name, presence: true, length: { maximum: 256 }
   validates :start_at, presence: true
   validates :duration_minutes,
             presence: true,
