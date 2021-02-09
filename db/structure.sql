@@ -101,10 +101,17 @@ ALTER TABLE ONLY public.schema_migrations
 
 
 --
+-- Name: index_scheduled_trainings_on_course_name; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_scheduled_trainings_on_course_name ON public.scheduled_trainings USING btree (course_name);
+
+
+--
 -- Name: index_scheduled_trainings_on_instructor_name; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX index_scheduled_trainings_on_instructor_name ON public.scheduled_trainings USING btree (instructor_name);
+CREATE INDEX index_scheduled_trainings_on_instructor_name ON public.scheduled_trainings USING btree (instructor_name);
 
 
 --
