@@ -21,4 +21,8 @@ group :development do
   gem 'spring'
 end
 
+group :test do
+  gem 'rspec-rails', '~> 4.0.2'
+end
+
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]

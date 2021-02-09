@@ -1,9 +1,17 @@
 # frozen_string_literal: true
 
 class ScheduledTraining < ApplicationRecord
-  validates :instructor_name, presence: true, length: { maximum: 256 }, uniqueness: { scope: :course_name }
   validates :course_name, presence: true, length: { maximum: 256 }
   validates :start_at, presence: true
+
+  validates :instructor_name,
+            presence: true,
+            length: { maximum: 256 },
+            uniqueness: {
+              scope: :course_name,
+              message: 'has already been taken for this course'
+            }
+
   validates :duration_minutes,
             presence: true,
             numericality: {
@@ -14,6 +22,8 @@ class ScheduledTraining < ApplicationRecord
   validate :overlap
 
   private def overlap
+    return if !start_at || !duration_minutes
+
     is_overlap =
       ScheduledTraining.where(instructor_name: instructor_name)
         .where(
@@ -22,6 +32,6 @@ class ScheduledTraining < ApplicationRecord
           start_at + duration_minutes.minutes
         ).count != 0
 
-    errors.add(:start_at, 'start_at and duration are overlaped with other') if is_overlap
+    errors.add(:start_at, :overlap, message: 'start_at and duration are overlaped with other') if is_overlap
   end
 end
