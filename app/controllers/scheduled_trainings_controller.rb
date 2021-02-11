@@ -25,7 +25,7 @@ class ScheduledTrainingsController < ApplicationController
   end
 
   def update
-    action = ScheduledTrainings::UpdateService.new.call(@scheduled_training, editing_training_params)
+    action = ScheduledTrainings::UpdateService.new.call(@scheduled_training, training_params)
 
     if action.success?
       render json: action.result
@@ -48,7 +48,4 @@ class ScheduledTrainingsController < ApplicationController
     params.require(:scheduled_training).permit(:instructor_name, :course_name, :start_at, :duration_minutes)
   end
 
-  def editing_training_params
-    params.require(:scheduled_training).permit(:course_name, :start_at, :duration_minutes)
-  end
 end

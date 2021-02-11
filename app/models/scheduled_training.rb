@@ -22,7 +22,7 @@ class ScheduledTraining < ApplicationRecord
   validate :overlap
 
   private def overlap
-    return if !start_at || !duration_minutes
+    return if !start_at_changed? && !duration_minutes_changed?
 
     is_overlap =
       ScheduledTraining.where(instructor_name: instructor_name)
